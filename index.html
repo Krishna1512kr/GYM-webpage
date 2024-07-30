@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" class="css">
     <style>
-        /* css Reset */
+        /* CSS Reset */
         body {
             font-family: 'Balsamiq Sans', cursive;
             color: aliceblue;
@@ -25,6 +25,8 @@
             align-items: center;
             padding: 20px;
             flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
         }
 
         .left {
@@ -32,7 +34,6 @@
             flex-direction: column;
             align-items: center;
             line-height: 21px;
-            margin-bottom: 20px;
         }
 
         .left img {
@@ -43,7 +44,6 @@
         .mid {
             flex-grow: 1;
             text-align: center;
-            margin-bottom: 20px;
         }
 
         .navbar {
@@ -78,7 +78,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
         }
 
         .btn {
@@ -102,7 +101,7 @@
         .container {
             border: 2px solid white;
             border-radius: 20px;
-            margin: 20px;
+            margin: 20px auto;
             padding: 40px;
             width: 80%;
             max-width: 600px;
@@ -135,8 +134,31 @@
             font-size: 20px;
         }
 
+        footer {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            text-align: center;
+            color: antiquewhite;
+            position: fixed;
+            bottom: -25px;
+            width: 100%;
+        }
+
+        footer a {
+            color: antiquewhite;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: #eeb8b8;
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
-            .left, .mid, .right {
+            .left,
+            .mid,
+            .right {
                 width: 100%;
                 text-align: center;
                 margin-bottom: 20px;
@@ -149,12 +171,6 @@
             .navbar li {
                 margin: 10px 0;
             }
-        }
-
-        @media (max-width: 480px) {
-            .btn {
-                width: 100%;
-            }
 
             .container {
                 width: 90%;
@@ -163,6 +179,12 @@
 
             .form-group input {
                 font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                width: 100%;
             }
         }
     </style>
@@ -183,13 +205,13 @@
             </ul>
         </div>
         <div class="right">
-            <button class="btn">Call Us Now</button>
-            <button class="btn">Email Us Now</button>
+            <button class="btn" onclick="callUs()">Call Us Now</button>
+            <button class="btn" onclick="emailUs()">Email Us Now</button>
         </div>
     </header>
     <div class="container">
         <h1>Join The Best Gym of Haldia</h1>
-        <form action="backend.php">
+        <form id="signup-form" action="http://localhost:3000/submit" method="POST" onsubmit="return validateForm()">
             <div class="form-group">
                 <input type="text" name="name" placeholder="Enter your Name">
             </div>
@@ -211,6 +233,53 @@
             <button class="btn" type="submit">Submit</button>
         </form>
     </div>
+    <footer>
+        <p>&copy; 2024 Krishna Fitness Gym. All Rights Reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#">Contact Us</a>
+        </p>
+    </footer>
+
+    <script>
+        function callUs() {
+            alert('Calling Krishna Fitness Gym...');
+        }
+
+        function emailUs() {
+            alert('Emailing Krishna Fitness Gym...');
+        }
+
+        function validateForm() {
+            var form = document.getElementById('signup-form');
+            var name = form['name'].value;
+            var age = form['age'].value;
+            var gender = form['gender'].value;
+            var locality = form['locality'].value;
+            var email = form['email'].value;
+            var phone = form['phone'].value;
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var phonePattern = /^\d{10}$/;
+
+            if (name == "" || age == "" || gender == "" || locality == "" || email == "" || phone == "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address");
+                return false;
+            }
+
+            if (!phonePattern.test(phone)) {
+                alert("Please enter a valid phone number");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 
 </html>
